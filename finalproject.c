@@ -28,7 +28,9 @@ int main(int argc, char** argv) {
 		}
 		return 0;
 	} else if (strcmp(argv[1], "secret") == 0) {
-		puts("you found the secret");
+		puts("Correct password entered, the location is: ...");
+	}else{
+		puts("you didn't enter the correct password");
 	}
 	return 0;
 }
