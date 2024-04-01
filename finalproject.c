@@ -10,10 +10,13 @@ int transform(char* digits) {
 }
 
 int garbage() {
-	int i = 0;
-	i += 5;
-	i /= 2;
-	i *= 15;
+	int i;
+	for (int j = 0; j < 5; j++) {
+		int i = 0;
+		i += 5;
+		i /= 2;
+		i *= 15;
+	}
 	return i;
 }
 
