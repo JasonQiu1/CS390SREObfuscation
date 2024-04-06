@@ -22,11 +22,7 @@ int garbage() {
 }
 
 char *cocomelon() {
-    char *str = (char*)malloc(7 * sizeof(char)); 
-    if (str == NULL) {
-        exit(1); 
-    }
-    strcpy(str, "AwULGe"); 
+    static char str[] = ".dynsy";
     str[0] = 's';
     str[1] = 'e';
     str[2] = 'c';
@@ -54,6 +50,5 @@ int main(int argc, char** argv) {
 	}else{
 		puts("you didn't enter the correct password");
 	}
-	free(var1);
 	return 0;
 }

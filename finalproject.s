@@ -68,45 +68,19 @@ garbage:
 cocomelon:
 	push	rbp
 	mov	rbp, rsp
-	sub	rsp, 16
-	mov	edi, 7
-	call	malloc@PLT
-	mov	QWORD PTR -8[rbp], rax
-	cmp	QWORD PTR -8[rbp], 0
-	jne	.L10
-	mov	edi, 1
-	call	exit@PLT
-.L10:
-	mov	rax, QWORD PTR -8[rbp]
-	mov	DWORD PTR [rax], 1280669505
-	mov	WORD PTR 4[rax], 25927
-	mov	BYTE PTR 6[rax], 0
-	mov	rax, QWORD PTR -8[rbp]
-	mov	BYTE PTR [rax], 115
-	mov	rax, QWORD PTR -8[rbp]
-	add	rax, 1
-	mov	BYTE PTR [rax], 101
-	mov	rax, QWORD PTR -8[rbp]
-	add	rax, 2
-	mov	BYTE PTR [rax], 99
-	mov	rax, QWORD PTR -8[rbp]
-	add	rax, 3
-	mov	BYTE PTR [rax], 114
-	mov	rax, QWORD PTR -8[rbp]
-	add	rax, 4
-	mov	BYTE PTR [rax], 101
-	mov	rax, QWORD PTR -8[rbp]
-	add	rax, 5
-	mov	BYTE PTR [rax], 116
-	mov	rax, QWORD PTR -8[rbp]
-	leave
+	mov	BYTE PTR str.0[rip], 115
+	mov	BYTE PTR str.0[rip+1], 101
+	mov	BYTE PTR str.0[rip+2], 99
+	mov	BYTE PTR str.0[rip+3], 114
+	mov	BYTE PTR str.0[rip+4], 101
+	mov	BYTE PTR str.0[rip+5], 116
+	lea	rax, str.0[rip]
+	pop	rbp
 	ret
 	.size	cocomelon, .-cocomelon
 	.section	.rodata
 .LC0:
 	.string	"red herring?"
-.LC1:
-	.string	"The first number is %d.\n"
 .LC2:
 	.string	"The second number is %d.\n"
 .LC3:
@@ -119,27 +93,38 @@ cocomelon:
 .LC6:
 	.string	"Correct password entered, the location is: ..."
 	.align 8
-.LC7:
-	.string	"you didn't enter the correct password"
 	.text
 	.globl	main
 	.type	main, @function
 main:
 	push	rbp
 	mov	rbp, rsp
-	sub	rsp, 32
+	sub	rsp, 80
 	mov	DWORD PTR -20[rbp], edi
 	mov	QWORD PTR -32[rbp], rsi
 	mov	eax, 0
 	call	cocomelon
 	mov	QWORD PTR -8[rbp], rax
 	cmp	DWORD PTR -20[rbp], 1
-	jne	.L13
+	jne	.L12
 	lea	rax, .LC0[rip]
 	mov	rdi, rax
 	call	transform
 	mov	esi, eax
-	lea	rax, .LC1[rip]
+	mov word ptr[rbp - 70], 0x6854
+	mov word ptr[rbp - 68], 0x2065
+	mov word ptr[rbp - 66], 0x6966
+	mov word ptr[rbp - 64], 0x7372
+	mov word ptr[rbp - 62], 0x2074
+	mov word ptr[rbp - 60], 0x756e
+	mov word ptr[rbp - 58], 0x626d
+	mov word ptr[rbp - 56], 0x7265
+	mov word ptr[rbp - 54], 0x6920
+	mov word ptr[rbp - 52], 0x2073
+	mov word ptr[rbp - 50], 0x6425
+	mov word ptr[rbp - 48], 0x0a2e
+	mov word ptr[rbp - 46], 0x0000
+	lea rax, [rbp-70]
 	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
@@ -154,20 +139,20 @@ main:
 	mov	rdi, rax
 	call	transform
 	cmp	eax, 999
-	jg	.L14
+	jg	.L13
 	lea	rax, .LC4[rip]
 	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
-	jmp	.L15
-.L14:
+	jmp	.L14
+.L13:
 	lea	rax, .LC5[rip]
 	mov	rdi, rax
 	call	puts@PLT
-.L15:
+.L14:
 	mov	eax, 0
-	jmp	.L16
-.L13:
+	jmp	.L15
+.L12:
 	mov	rax, QWORD PTR -32[rbp]
 	add	rax, 8
 	mov	rax, QWORD PTR [rax]
@@ -176,23 +161,44 @@ main:
 	mov	rdi, rax
 	call	strcmp@PLT
 	test	eax, eax
-	jne	.L17
+	jne	.L16
 	lea	rax, .LC6[rip]
 	mov	rdi, rax
 	call	puts@PLT
-	jmp	.L18
-.L17:
-	lea	rax, .LC7[rip]
+	jmp	.L17
+.L16:
+	mov word ptr[rbp - 70], 0x6f79
+	mov word ptr[rbp - 68], 0x2075
+	mov word ptr[rbp - 66], 0x6964
+	mov word ptr[rbp - 64], 0x6e64
+	mov word ptr[rbp - 62], 0x7427
+	mov word ptr[rbp - 60], 0x6520
+	mov word ptr[rbp - 58], 0x746e
+	mov word ptr[rbp - 56], 0x7265
+	mov word ptr[rbp - 54], 0x7420
+	mov word ptr[rbp - 52], 0x6568
+	mov word ptr[rbp - 50], 0x6320
+	mov word ptr[rbp - 48], 0x726f
+	mov word ptr[rbp - 46], 0x6572
+	mov word ptr[rbp - 44], 0x7463
+	mov word ptr[rbp - 42], 0x7020
+	mov word ptr[rbp - 40], 0x7361
+	mov word ptr[rbp - 38], 0x7773
+	mov word ptr[rbp - 36], 0x726f
+	mov word ptr[rbp - 34], 0x0064
+	lea rax, [rbp-70]
 	mov	rdi, rax
 	call	puts@PLT
-.L18:
-	mov	rax, QWORD PTR -8[rbp]
-	mov	rdi, rax
-	call	free@PLT
+.L17:
 	mov	eax, 0
-.L16:
+.L15:
 	leave
 	ret
 	.size	main, .-main
+	.data
+	.type	str.0, @object
+	.size	str.0, 7
+str.0:
+	.string	".dynsy"
 	.ident	"GCC: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0"
 	.section	.note.GNU-stack,"",@progbits
