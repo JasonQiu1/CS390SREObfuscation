@@ -40,22 +40,68 @@ garbage:
 	push	rbp
 	mov	rbp, rsp
 	mov	DWORD PTR -4[rbp], 0
-	add	DWORD PTR -4[rbp], 5
-	mov	eax, DWORD PTR -4[rbp]
+	jmp	.L6
+.L7:
+	mov	DWORD PTR -12[rbp], 0
+	add	DWORD PTR -12[rbp], 5
+	mov	eax, DWORD PTR -12[rbp]
 	mov	edx, eax
 	shr	edx, 31
 	add	eax, edx
 	sar	eax
-	mov	DWORD PTR -4[rbp], eax
-	mov	edx, DWORD PTR -4[rbp]
+	mov	DWORD PTR -12[rbp], eax
+	mov	edx, DWORD PTR -12[rbp]
 	mov	eax, edx
 	sal	eax, 4
 	sub	eax, edx
-	mov	DWORD PTR -4[rbp], eax
-	mov	eax, DWORD PTR -4[rbp]
+	mov	DWORD PTR -12[rbp], eax
+	add	DWORD PTR -4[rbp], 1
+.L6:
+	cmp	DWORD PTR -4[rbp], 4
+	jle	.L7
+	mov	eax, DWORD PTR -8[rbp]
 	pop	rbp
 	ret
 	.size	garbage, .-garbage
+	.globl	cocomelon
+	.type	cocomelon, @function
+cocomelon:
+	push	rbp
+	mov	rbp, rsp
+	sub	rsp, 16
+	mov	edi, 7
+	call	malloc@PLT
+	mov	QWORD PTR -8[rbp], rax
+	cmp	QWORD PTR -8[rbp], 0
+	jne	.L10
+	mov	edi, 1
+	call	exit@PLT
+.L10:
+	mov	rax, QWORD PTR -8[rbp]
+	mov	DWORD PTR [rax], 1280669505
+	mov	WORD PTR 4[rax], 25927
+	mov	BYTE PTR 6[rax], 0
+	mov	rax, QWORD PTR -8[rbp]
+	mov	BYTE PTR [rax], 115
+	mov	rax, QWORD PTR -8[rbp]
+	add	rax, 1
+	mov	BYTE PTR [rax], 101
+	mov	rax, QWORD PTR -8[rbp]
+	add	rax, 2
+	mov	BYTE PTR [rax], 99
+	mov	rax, QWORD PTR -8[rbp]
+	add	rax, 3
+	mov	BYTE PTR [rax], 114
+	mov	rax, QWORD PTR -8[rbp]
+	add	rax, 4
+	mov	BYTE PTR [rax], 101
+	mov	rax, QWORD PTR -8[rbp]
+	add	rax, 5
+	mov	BYTE PTR [rax], 116
+	mov	rax, QWORD PTR -8[rbp]
+	leave
+	ret
+	.size	cocomelon, .-cocomelon
 	.section	.rodata
 .LC0:
 	.string	"red herring?"
@@ -69,21 +115,26 @@ garbage:
 	.string	"AWOOGA!"
 .LC5:
 	.string	"HMMMMMM"
+	.align 8
 .LC6:
-	.string	"secret"
+	.string	"Correct password entered, the location is: ..."
+	.align 8
 .LC7:
-	.string	"you found the secret"
+	.string	"you didn't enter the correct password"
 	.text
 	.globl	main
 	.type	main, @function
 main:
 	push	rbp
 	mov	rbp, rsp
-	sub	rsp, 16
-	mov	DWORD PTR -4[rbp], edi
-	mov	QWORD PTR -16[rbp], rsi
-	cmp	DWORD PTR -4[rbp], 1
-	jne	.L8
+	sub	rsp, 32
+	mov	DWORD PTR -20[rbp], edi
+	mov	QWORD PTR -32[rbp], rsi
+	mov	eax, 0
+	call	cocomelon
+	mov	QWORD PTR -8[rbp], rax
+	cmp	DWORD PTR -20[rbp], 1
+	jne	.L13
 	lea	rax, .LC0[rip]
 	mov	rdi, rax
 	call	transform
@@ -103,35 +154,43 @@ main:
 	mov	rdi, rax
 	call	transform
 	cmp	eax, 999
-	jg	.L9
+	jg	.L14
 	lea	rax, .LC4[rip]
 	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
-	jmp	.L10
-.L9:
+	jmp	.L15
+.L14:
 	lea	rax, .LC5[rip]
 	mov	rdi, rax
 	call	puts@PLT
-.L10:
+.L15:
 	mov	eax, 0
-	jmp	.L11
-.L8:
-	mov	rax, QWORD PTR -16[rbp]
+	jmp	.L16
+.L13:
+	mov	rax, QWORD PTR -32[rbp]
 	add	rax, 8
 	mov	rax, QWORD PTR [rax]
-	lea	rdx, .LC6[rip]
+	mov	rdx, QWORD PTR -8[rbp]
 	mov	rsi, rdx
 	mov	rdi, rax
 	call	strcmp@PLT
 	test	eax, eax
-	jne	.L12
+	jne	.L17
+	lea	rax, .LC6[rip]
+	mov	rdi, rax
+	call	puts@PLT
+	jmp	.L18
+.L17:
 	lea	rax, .LC7[rip]
 	mov	rdi, rax
 	call	puts@PLT
-.L12:
+.L18:
+	mov	rax, QWORD PTR -8[rbp]
+	mov	rdi, rax
+	call	free@PLT
 	mov	eax, 0
-.L11:
+.L16:
 	leave
 	ret
 	.size	main, .-main
