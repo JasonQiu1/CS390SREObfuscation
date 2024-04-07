@@ -111,7 +111,7 @@ char *cocomelon() {
 }
 
 char *cocomelon2() {
-    static char str[] = "aaaa";
+    static char str[] = "__gm";
     str[0] = 'L';
     str[1] = '1';
     str[2] = 'n';
@@ -120,7 +120,7 @@ char *cocomelon2() {
 }
 
 char *cocomelon3(int temp) {
-    static char str[] = "aaa";
+    static char str[] = ".ab";
     str[0] = 'T';
     str[1] = '4';
     str[2] = 'x';
