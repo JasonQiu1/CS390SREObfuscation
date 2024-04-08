@@ -72,6 +72,8 @@ int checkOshotse(char* guess){
 	int temp = 0x12;
 	int i = 7;
 	int j = 0;
+	// DO NOT REMOVE THIS CALL TO garbage, IT'S NECESSARY TO RESERVE THE STACK FRAME AND MAKE SURE BLOATED EQUIVALENTS WORK
+	garbage();
 	while(i > 0){
 		if(((guess[18 + j] ^ temp) + i) != section3[j]){
 			return 0;
@@ -79,7 +81,7 @@ int checkOshotse(char* guess){
 		temp += 0x22;
 		j++;
 		i--;
-		
+
 	}
 	return 1;
 }
@@ -100,31 +102,31 @@ int checkQiu(char* guess){
 }
 
 char *cocomelon() {
-    static char str[] = ".dynsy";
-    str[0] = 's';
-    str[1] = 'e';
-    str[2] = 'c';
-    str[3] = 'r';
-    str[4] = 'e';
-    str[5] = 't';
-    return str;
+	static char str[] = ".dynsy";
+	str[0] = 's';
+	str[1] = 'e';
+	str[2] = 'c';
+	str[3] = 'r';
+	str[4] = 'e';
+	str[5] = 't';
+	return str;
 }
 
 char *cocomelon2() {
-    static char str[] = "__gm";
-    str[0] = 'L';
-    str[1] = '1';
-    str[2] = 'n';
-    str[3] = 'k';
-    return str;
+	static char str[] = "__gm";
+	str[0] = 'L';
+	str[1] = '1';
+	str[2] = 'n';
+	str[3] = 'k';
+	return str;
 }
 
 char *cocomelon3(int temp) {
-    static char str[] = ".ab";
-    str[0] = 'T';
-    str[1] = '4';
-    str[2] = 'x';
-    return str;
+	static char str[] = ".ab";
+	str[0] = 'T';
+	str[1] = '4';
+	str[2] = 'x';
+	return str;
 }
 
 int main(int argc, char** argv) {
@@ -154,7 +156,6 @@ int main(int argc, char** argv) {
 							if(checkQiu(argv[1]) && argv[1][29] == '}'){
 								puts("Correct password entered, the location is: ..."); //gives correct location, replace later
 								//TO-DO: Once the item is placed, take a picture and use imgur or tiny url to make a link we can go to. In order to get the location link the argv[1] value will be xored with the url, so even if they bypass all the comparisons by manually changing the registers, it will only give the right link if their password is correct
-
 							}
 						}
 					}
@@ -163,6 +164,6 @@ int main(int argc, char** argv) {
 		}
 	}
 	//correct pass: CS390{Sp@rk0_L1nk_0sh0ts3_Q1u}
-	
+
 	return 0;
 }
