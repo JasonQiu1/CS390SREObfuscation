@@ -10,7 +10,7 @@ $(EXECUTABLENAME)-stripped: $(EXECUTABLENAME)-debug
 $(EXECUTABLENAME)-debug: $(EXECUTABLENAME)-bloated.s
 	$(CC) $(CFLAGS) $(EXECUTABLENAME)-bloated.s -o $(EXECUTABLENAME)-debug
 
-$(EXECUTABLENAME)-bloated.s: $(SOURCENAME)
+$(EXECUTABLENAME)-bloated.s: $(SOURCENAME) replaceBloatedEquivalents.sed
 	$(CC) $(CFLAGS) $(ASSEMBLEFLAGS) $(SOURCENAME) -o $(EXECUTABLENAME)-bloated.s
 	sed -i -f replaceBloatedEquivalents.sed $(EXECUTABLENAME)-bloated.s
 
@@ -19,4 +19,7 @@ clean:
 	rm $(EXECUTABLENAME)-debug
 	rm $(EXECUTABLENAME)-bloated.s
 
-.PHONY: clean
+test:
+	./$(EXECUTABLENAME)-stripped CS390{Sp@rk0_L1nk_0sh0ts3_Q1u}
+
+.PHONY: clean test
