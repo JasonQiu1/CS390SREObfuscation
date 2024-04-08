@@ -151,8 +151,10 @@ int main(int argc, char** argv) {
 				if(checkSparko(argv[1]) && argv[1][12] == '_'){
 					if(checkLink(argv[1]) && argv[1][17] == '_'){
 						if(checkOshotse(argv[1]) && argv[1][25] == '_'){
-							if(checkQiu(argv[1])){
-								puts("Correct password entered, the location is: ..."); //replace later
+							if(checkQiu(argv[1]) && argv[1][29] == '}'){
+								puts("Correct password entered, the location is: ..."); //gives correct location, replace later
+								//TO-DO: Once the item is placed, take a picture and use imgur or tiny url to make a link we can go to. In order to get the location link the argv[1] value will be xored with the url, so even if they bypass all the comparisons by manually changing the registers, it will only give the right link if their password is correct
+
 							}
 						}
 					}
