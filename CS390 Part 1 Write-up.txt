@@ -19,4 +19,4 @@ Solution Strategies:
 Individual Contributions:
 * Audrey: wrote all of the C check… functions and framework in main to determine whether the complete, valid password was entered
 * Aloye: added some string hiding techniques to the C code and and the assembly code to make it difficult to find important strings with the strings command line call.
-* Jason:
+* Jason: Wrote sed script to replace some assembly code with bloated equivalents automatically. Wrote Makefile pipeline to automatically assemble, apply bloated equivalents, compile, and strip executables.
