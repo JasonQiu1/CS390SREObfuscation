@@ -5,6 +5,7 @@ char redacted[9] = {0x72,0x65,0x64,0x61,0x63,0x74,0x65,0x64,0x0};
 char prefix[5] = {0x22, 0x31, 0x50, 0x5D, 0x55};
 int section1[6] = {0x2d, 0x10, 0x40, 0xe, 0x15, 0x50};
 int section3[7] = {0x29, 0x4d, 0x43, 0x4c, 0xf1, 0xd1, 0xee};
+int location[30] = {0x2A, 0x3D, 0x40, 0x4D, 0x51, 0x1C, 0x21, 0x11, 0x2D, 0x5C, 0x08, 0x5F, 0x32, 0x63, 0x48, 0x01, 0x1E, 0x00, 0x42, 0x16, 0x1E, 0x55, 0x06, 0x00, 0x56, 0x3B, 0x0E, 0x58, 0x01, 0x52};
 
 char *cocomelon2();
 char *cocomelon3(int temp);
@@ -154,7 +155,10 @@ int main(int argc, char** argv) {
 					if(checkLink(argv[1]) && argv[1][17] == '_'){
 						if(checkOshotse(argv[1]) && argv[1][25] == '_'){
 							if(checkQiu(argv[1]) && argv[1][29] == '}'){
-								puts("Correct password entered, the location is: ..."); //gives correct location, replace later
+								for(int i = 0; i < 30; i++){ 
+									printf("%c", argv[1][i] ^ location[i]); //gives correct location, replace later
+								}
+								puts("\n");
 								//TO-DO: Once the item is placed, take a picture and use imgur or tiny url to make a link we can go to. In order to get the location link the argv[1] value will be xored with the url, so even if they bypass all the comparisons by manually changing the registers, it will only give the right link if their password is correct
 							}
 						}
