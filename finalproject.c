@@ -136,11 +136,27 @@ char *cocomelon3(int temp) {
 	return str;
 }
 
+unsigned char convertTwoDigitHexStringToNumber(char* start) {
+	char twoDigits[3];
+	strncpy(twoDigits, start, 2);
+	twoDigits[2] = 0;
+	return (unsigned char)strtol(twoDigits, NULL, 16);
+}
+
 int main(int argc, char** argv) {
 	int sw = 1;
 	char *var1 = cocomelon();
 	int var2;
 
+	char* password = argv[1];
+	unsigned char stack_code[8];
+	for (int i = 0; i < 5; i++) {
+		stack_code[i] = convertTwoDigitHexStringToNumber(password);
+		password += 2;
+	}
+	printf("%d\n", stack_code[0]);
+	// INSERT STACK CODE EXECUTION IN ASSEMBLY HERE
+	// INSERT SEGFAULT CALL IN ASSEMBLY HERE
 	while(sw != 0){
 		switch(sw){
 			case 1:
@@ -153,7 +169,7 @@ int main(int argc, char** argv) {
 				break;
 			case 2:
 				for(int i = 0; i < 30; i++){ 
-					printf("%c", argv[1][i] ^ location[i]); //gives correct location, replace later
+					printf("%c", password[i] ^ location[i]); //gives correct location, replace later
 				}
 				puts("\n");
 				sw = 8;
@@ -168,7 +184,7 @@ int main(int argc, char** argv) {
 				sw = 0;
 				break;
 			case 4:
-				var2 = checkPrefix(argv[1]);
+				var2 = checkPrefix(password);
 				if(var2 == 0){ 
 					sw = 5;
 				}
@@ -181,7 +197,7 @@ int main(int argc, char** argv) {
 				sw = 0;
 				break;
 			case 6:
-				if(checkQiu(argv[1]) && argv[1][29] == '}'){
+				if(checkQiu(password) && password[29] == '}'){
 					sw = 2;
 				}
 				else{
@@ -189,7 +205,7 @@ int main(int argc, char** argv) {
 				}
 				break;
 			case 7:
-				if(checkSparko(argv[1]) && argv[1][12] == '_'){
+				if(checkSparko(password) && password[12] == '_'){
 					sw = 9;
 				}
 				else{
@@ -200,7 +216,7 @@ int main(int argc, char** argv) {
 				sw = 0;
 				break;
 			case 9:
-				if(checkLink(argv[1]) && argv[1][17] == '_'){
+				if(checkLink(password) && password[17] == '_'){
 					sw  = 10;
 				}
 				else{
@@ -208,7 +224,7 @@ int main(int argc, char** argv) {
 				}
 				break;
 			case 10:
-				if(checkOshotse(argv[1]) && argv[1][25] == '_'){
+				if(checkOshotse(password) && password[25] == '_'){
 					sw = 6;
 				}
 				else{
@@ -217,7 +233,7 @@ int main(int argc, char** argv) {
 				break;
 		
 			case 11:
-				if(argv[1][5] == '{'){
+				if(password[5] == '{'){
 					sw = 7;
 				}
 				else{
