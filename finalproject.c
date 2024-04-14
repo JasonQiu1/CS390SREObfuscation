@@ -30,6 +30,8 @@ int garbage() {
 }
 
 void indirection(char* guess) {
+	// can add another garbage function that obfuscates code further and have
+	// 	indirection skip it
 	return;
 }
 
