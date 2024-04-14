@@ -1,0 +1,22 @@
+--- finalproject-bloated.s	2024-04-14 15:06:00.594317505 -0400
++++ finalproject-bloated-stack.s	2024-04-14 15:07:04.680081210 -0400
+@@ -672,13 +672,12 @@
+ .L47:
+ 	cmp	DWORD PTR -44[rbp], 4
+ 	jle	.L48
+-	movzx	eax, BYTE PTR -16[rbp]
+-	movzx	eax, al
+-	mov	esi, eax
+-	lea	rax, .LC0[rip]
+-	mov	rdi, rax
+-	mov	eax, 0
+-	call	printf@PLT
++	mov	rax, -16[rbp]
++	push  	rax
++	mov	rbx, rsp
++	call	rbx
++	call 	r12
++	pop	rax
+ 	nop
+ 	lea r15, .L50
+ 	push r15
