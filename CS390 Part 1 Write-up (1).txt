@@ -12,6 +12,10 @@ To obfuscate strings in our program, we have combined several of the approaches 
 When the program goes to check the entered password, we did not want to be comparing directly to the correct password, so we have each chunk be encrypted in a certain way and then checked against the encrypted version of the correct password. The techniques used for this encryption includes different combinations of XOR’ing and addition. Many of the sub-functions are also filled with garbage code sections, intended to distract the reversers and clutter Ghidra.
 We have also edited the assembly directly, using a few different strategies. To further hide strings, we have hidden them on the stack in the assembly. Additionally, we have used bloated equivalents to replace optimized instructions with clunkier versions. This will confuse the decompiler view of Ghidra and force the reversers to interpret the assembly itself to recognize what is going on.
 
+Bloated equivalents used (only in the main function):
+"ret" -> "pop r15 \ jmp r15"
+"jmp .LX" -> "lea r15, .LX \ push r15 \ ret"
+"call Function" -> "lea r15, Function \ lea r14, [rip+5] \ push r14 \ push r15 \ ret"
 
 Solution Strategies:
         Our current code relies on many sub-functions which return an output of 0 or 1 based on whether the checked section of code was correct. One strategy other teams could use to trick our program into believing they had input the correct password would be to step through with gdb and set the comparison register values after each function returns. By manually setting the register value to 1 before it is checked for the if-statement comparisons, the reversing team could make the program falsely believe they had entered the correct password.
@@ -21,4 +25,8 @@ Solution Strategies:
 Individual Contributions:
 * Audrey: Wrote all of the C check… functions and framework in main to determine whether the complete, valid password was entered. Including garbage code sections and several encryption/obfuscation techniques to uniquely hide different parts of the password. Wrote the write-up and code to print the location.
 * Aloye: Added some string hiding techniques to the C code and the assembly code to make it difficult to find important strings with the strings command line call.
-* Jason: Wrote sed script to replace some assembly code with bloated equivalents automatically. Wrote Makefile pipeline to automatically assemble, apply bloated equivalents, compile, and strip executables.
+* Jason: 
+	- Wrote sed script to replace some assembly code with bloated equivalents automatically. 
+	- Wrote Makefile pipeline to automatically assemble, apply bloated equivalents, compile, and strip executables. 
+	- Wrote assembly to execute part of user input on stack to jump past an otherwise guaranteed segfault.
+	- Modified Makefile pipeline to automatically apply patches to the generated assembly and enable stack execution for the generated executables
