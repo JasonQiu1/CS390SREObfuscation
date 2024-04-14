@@ -1,0 +1,24 @@
+﻿Part 1 Write-up: Coding Summary
+Audrey Link, Aloye Oshotse, and Jason Qiu
+
+
+Program Design: 
+Our program is designed to take in a password input from the command line and use several functions to compare different chunks of it to encrypted versions of the valid password. It is written such that only encrypted or broken up copies of the true password are present in the program and each section, (divided by ‘_’), is compared independently, and encrypted in a different way.
+When the fully correct password is entered, the encrypted location string can be XOR’d with it and printed to the screen. This prevents a reverser from jumping directly to the password print statement or bypassing comparisons by changing register values, because even if they were to trick the program into believing they had entered the write password, it will not decrypt the password accurately.
+
+
+Obfuscation Techniques: 
+To obfuscate strings in our program, we have combined several of the approaches discussed in class. Firstly, we do not store any strings, besides trivial strings that are printed to the standard out, together; all of the meaningful strings in our program are stored split up, so they are not easily detectable by using the strings function. We have also edited the assembly to hide strings using the stack.
+When the program goes to check the entered password, we did not want to be comparing directly to the correct password, so we have each chunk be encrypted in a certain way and then checked against the encrypted version of the correct password. The techniques used for this encryption includes different combinations of XOR’ing and addition. Many of the sub-functions are also filled with garbage code sections, intended to distract the reversers and clutter Ghidra.
+We have also edited the assembly directly, using a few different strategies. To further hide strings, we have hidden them on the stack in the assembly. Additionally, we have used bloated equivalents to replace optimized instructions with clunkier versions. This will confuse the decompiler view of Ghidra and force the reversers to interpret the assembly itself to recognize what is going on.
+
+
+Solution Strategies:
+        Our current code relies on many sub-functions which return an output of 0 or 1 based on whether the checked section of code was correct. One strategy other teams could use to trick our program into believing they had input the correct password would be to step through with gdb and set the comparison register values after each function returns. By manually setting the register value to 1 before it is checked for the if-statement comparisons, the reversing team could make the program falsely believe they had entered the correct password.
+        Although this will work to get the program to print out something, the reversing team will have to do more work to figure out the actual password in order to print the correct location. Just before printing the code goes through and XOR’s the encrypted location string with the password, so the reversing team will have to individually look through each sub-function to determine the different parts of the password. This will be doable, but time consuming, as they will have to figure out what each function is doing and perform the reverse action.
+
+
+Individual Contributions:
+* Audrey: Wrote all of the C check… functions and framework in main to determine whether the complete, valid password was entered. Including garbage code sections and several encryption/obfuscation techniques to uniquely hide different parts of the password. Wrote the write-up and code to print the location.
+* Aloye: Added some string hiding techniques to the C code and the assembly code to make it difficult to find important strings with the strings command line call.
+* Jason: Wrote sed script to replace some assembly code with bloated equivalents automatically. Wrote Makefile pipeline to automatically assemble, apply bloated equivalents, compile, and strip executables.
