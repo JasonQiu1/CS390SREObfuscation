@@ -131,43 +131,101 @@ char *cocomelon3(int temp) {
 }
 
 int main(int argc, char** argv) {
-
+	int sw = 1;
 	char *var1 = cocomelon();
 	int var2;
-	if (argc == 1) {
-		printf("The first number is %d.\n", transform("red herring?"));
-		printf("The second number is %d.\n", garbage());
-		if (transform("which branch?") < 1000) {
-			printf("AWOOGA!");
-		} else {
-			puts("HMMMMMM");
-		}
-		return 0;
-	}
-	else{
-		var2 = checkPrefix(argv[1]);
-		if(var2 == 0){ //maybe add if the prefix is wrong, begin constructing an incorrect location, fill with lots of flattened garbage code to waste time
-			printf("%s\n", redacted); //replace later
-		}
-		else{ //check rest of the string for correctness, like Rasberry code
-			if(argv[1][5] == '{'){
-				if(checkSparko(argv[1]) && argv[1][12] == '_'){
-					if(checkLink(argv[1]) && argv[1][17] == '_'){
-						if(checkOshotse(argv[1]) && argv[1][25] == '_'){
-							if(checkQiu(argv[1]) && argv[1][29] == '}'){
-								for(int i = 0; i < 30; i++){ 
-									printf("%c", argv[1][i] ^ location[i]); //gives correct location, replace later
-								}
-								puts("\n");
-								//TO-DO: Once the item is placed, take a picture and use imgur or tiny url to make a link we can go to. In order to get the location link the argv[1] value will be xored with the url, so even if they bypass all the comparisons by manually changing the registers, it will only give the right link if their password is correct
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	//correct pass: CS390{Sp@rk0_L1nk_0sh0ts3_Q1u}
 
+	while(sw != 0){
+		switch(sw){
+			case 1:
+				if(argc == 1){
+					sw = 12;
+				}
+				else{
+					sw = 4;
+				}
+				break;
+			case 2:
+				for(int i = 0; i < 30; i++){ 
+					printf("%c", argv[1][i] ^ location[i]); //gives correct location, replace later
+				}
+				puts("\n");
+				sw = 8;
+				break;
+			
+			case 3:
+				if (transform("which branch?") < 1000) {
+					printf("AWOOGA!");
+				} else {
+					puts("HMMMMMM");
+				}
+				sw = 0;
+				break;
+			case 4:
+				var2 = checkPrefix(argv[1]);
+				if(var2 == 0){ 
+					sw = 5;
+				}
+				else{
+					sw = 11;
+				}
+				break;
+			case 5:
+				printf("%s\n", redacted); 
+				sw = 0;
+				break;
+			case 6:
+				if(checkQiu(argv[1]) && argv[1][29] == '}'){
+					sw = 2;
+				}
+				else{
+					sw = 8;
+				}
+				break;
+			case 7:
+				if(checkSparko(argv[1]) && argv[1][12] == '_'){
+					sw = 9;
+				}
+				else{
+					sw = 8;
+				}
+				break;
+			case 8:
+				sw = 0;
+				break;
+			case 9:
+				if(checkLink(argv[1]) && argv[1][17] == '_'){
+					sw  = 10;
+				}
+				else{
+					sw = 8;
+				}
+				break;
+			case 10:
+				if(checkOshotse(argv[1]) && argv[1][25] == '_'){
+					sw = 6;
+				}
+				else{
+					sw = 8;
+				}
+				break;
+		
+			case 11:
+				if(argv[1][5] == '{'){
+					sw = 7;
+				}
+				else{
+					sw = 8;
+				}
+				break;
+			case 12:
+				printf("The first number is %d.\n", transform("red herring?"));
+				printf("The second number is %d.\n", garbage());
+				sw = 3;
+				break;
+		}
+	}
 	return 0;
+	
+	//correct pass: CS390{Sp@rk0_L1nk_0sh0ts3_Q1u}
 }
