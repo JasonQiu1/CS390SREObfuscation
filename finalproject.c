@@ -29,6 +29,10 @@ int garbage() {
 	return i;
 }
 
+void indirection(char* guess) {
+	return;
+}
+
 int checkPrefix(char* guess){
 	if(strlen(guess) < 5){
 		return 0;
