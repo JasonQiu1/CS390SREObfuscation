@@ -449,10 +449,6 @@ convertTwoDigitHexStringToNumber:
 	.string	"HMMMMMM"
 .LC5:
 	.string	"red herring?"
-.LC6:
-	.string	"The first number is %d.\n"
-.LC7:
-	.string	"The second number is %d.\n"
 	.text
 	.globl	main
 	.type	main, @function
@@ -679,14 +675,40 @@ main:
 	mov	rdi, rax
 	call	transform
 	mov	esi, eax
-	lea	rax, .LC6[rip]
+	mov word ptr[rbp - 70], 0x6854
+	mov word ptr[rbp - 68], 0x2065
+	mov word ptr[rbp - 66], 0x6966
+	mov word ptr[rbp - 64], 0x7372
+	mov word ptr[rbp - 62], 0x2074
+	mov word ptr[rbp - 60], 0x756e
+	mov word ptr[rbp - 58], 0x626d
+	mov word ptr[rbp - 56], 0x7265
+	mov word ptr[rbp - 54], 0x6920
+	mov word ptr[rbp - 52], 0x2073
+	mov word ptr[rbp - 50], 0x6425
+	mov word ptr[rbp - 48], 0x0a2e
+	mov word ptr[rbp - 46], 0x0000
+	lea rax, [rbp-70]
 	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
 	mov	eax, 0
 	call	garbage
 	mov	esi, eax
-	lea	rax, .LC7[rip]
+	mov word ptr[rbp - 70], 0x6854
+	mov word ptr[rbp - 68], 0x2065
+	mov word ptr[rbp - 66], 0x6573
+	mov word ptr[rbp - 64], 0x6f63
+	mov word ptr[rbp - 62], 0x646e
+	mov word ptr[rbp - 60], 0x6e20
+	mov word ptr[rbp - 58], 0x6d75
+	mov word ptr[rbp - 56], 0x6562
+	mov word ptr[rbp - 54], 0x2072
+	mov word ptr[rbp - 52], 0x7369
+	mov word ptr[rbp - 50], 0x2520
+	mov word ptr[rbp - 48], 0x2e64
+	mov word ptr[rbp - 46], 0x000a
+	lea rax, [rbp-70]
 	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
