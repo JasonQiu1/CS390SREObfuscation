@@ -414,156 +414,132 @@ cocomelon3:
 	pop	rbp
 	ret
 	.size	cocomelon3, .-cocomelon3
+	.globl	convertTwoDigitHexStringToNumber
+	.type	convertTwoDigitHexStringToNumber, @function
+convertTwoDigitHexStringToNumber:
+	push	rbp
+	mov	rbp, rsp
+	sub	rsp, 32
+	mov	QWORD PTR -24[rbp], rdi
+	mov	rcx, QWORD PTR -24[rbp]
+	lea	rax, -3[rbp]
+	mov	edx, 2
+	mov	rsi, rcx
+	mov	rdi, rax
+	call	strncpy@PLT
+	mov	BYTE PTR -1[rbp], 0
+	lea	rax, -3[rbp]
+	mov	edx, 16
+	mov	esi, 0
+	mov	rdi, rax
+	call	strtol@PLT
+	leave
+	ret
+	.size	convertTwoDigitHexStringToNumber, .-convertTwoDigitHexStringToNumber
 	.section	.rodata
 .LC0:
-	.string	"red herring?"
+	.string	"%d\n"
 .LC1:
-	.string	"The first number is %d.\n"
-.LC2:
-	.string	"The second number is %d.\n"
-.LC3:
-	.string	"which branch?"
-.LC4:
-	.string	"AWOOGA!"
-.LC5:
-	.string	"HMMMMMM"
-.LC6:
 	.string	"\n"
+.LC2:
+	.string	"which branch?"
+.LC3:
+	.string	"AWOOGA!"
+.LC4:
+	.string	"HMMMMMM"
+.LC5:
+	.string	"red herring?"
+.LC6:
+	.string	"The first number is %d.\n"
+.LC7:
+	.string	"The second number is %d.\n"
 	.text
 	.globl	main
 	.type	main, @function
 main:
 	push	rbp
 	mov	rbp, rsp
-	sub	rsp, 48
-	mov	DWORD PTR -36[rbp], edi
-	mov	QWORD PTR -48[rbp], rsi
+	sub	rsp, 64
+	mov	DWORD PTR -52[rbp], edi
+	mov	QWORD PTR -64[rbp], rsi
+	mov	DWORD PTR -4[rbp], 1
 	mov	eax, 0
 	call	cocomelon
+	mov	QWORD PTR -32[rbp], rax
+	mov	rax, QWORD PTR -64[rbp]
+	mov	rax, QWORD PTR 8[rax]
 	mov	QWORD PTR -16[rbp], rax
-	cmp	DWORD PTR -36[rbp], 1
-	jne	.L44
+	mov	DWORD PTR -20[rbp], 0
+	jmp	.L46
+.L47:
+	mov	rax, QWORD PTR -16[rbp]
+	mov	rdi, rax
+	call	convertTwoDigitHexStringToNumber
+	mov	edx, DWORD PTR -20[rbp]
+	movsx	rdx, edx
+	mov	BYTE PTR -44[rbp+rdx], al
+	add	QWORD PTR -16[rbp], 2
+	add	DWORD PTR -20[rbp], 1
+.L46:
+	cmp	DWORD PTR -20[rbp], 4
+	jle	.L47
+	movzx	eax, BYTE PTR -44[rbp]
+	movzx	eax, al
+	mov	esi, eax
 	lea	rax, .LC0[rip]
 	mov	rdi, rax
-	call	transform
-	mov	esi, eax
-	lea	rax, .LC1[rip]
-	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
-	mov	eax, 0
-	call	garbage
-	mov	esi, eax
-	lea	rax, .LC2[rip]
-	mov	rdi, rax
-	mov	eax, 0
-	call	printf@PLT
-	lea	rax, .LC3[rip]
-	mov	rdi, rax
-	call	transform
-	cmp	eax, 999
-	jg	.L45
-	lea	rax, .LC4[rip]
-	mov	rdi, rax
-	mov	eax, 0
-	call	printf@PLT
-	jmp	.L46
-.L45:
-	lea	rax, .LC5[rip]
-	mov	rdi, rax
-	call	puts@PLT
-.L46:
-	mov	eax, 0
-	jmp	.L47
-.L44:
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	mov	rdi, rax
-	call	checkPrefix
-	mov	DWORD PTR -20[rbp], eax
-	cmp	DWORD PTR -20[rbp], 0
-	jne	.L48
-	lea	rax, redacted[rip]
-	mov	rdi, rax
-	call	puts@PLT
+	nop
 	jmp	.L49
-.L48:
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	add	rax, 5
-	movzx	eax, BYTE PTR [rax]
-	cmp	al, 123
-	jne	.L49
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	mov	rdi, rax
-	call	checkSparko
-	test	eax, eax
-	je	.L49
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	add	rax, 12
-	movzx	eax, BYTE PTR [rax]
-	cmp	al, 95
-	jne	.L49
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	mov	rdi, rax
-	call	checkLink
-	test	eax, eax
-	je	.L49
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	add	rax, 17
-	movzx	eax, BYTE PTR [rax]
-	cmp	al, 95
-	jne	.L49
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	mov	rdi, rax
-	call	checkOshotse
-	test	eax, eax
-	je	.L49
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	add	rax, 25
-	movzx	eax, BYTE PTR [rax]
-	cmp	al, 95
-	jne	.L49
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	mov	rdi, rax
-	call	checkQiu
-	test	eax, eax
-	je	.L49
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rax, QWORD PTR [rax]
-	add	rax, 29
-	movzx	eax, BYTE PTR [rax]
-	cmp	al, 125
-	jne	.L49
-	mov	DWORD PTR -4[rbp], 0
-	jmp	.L50
-.L51:
-	mov	rax, QWORD PTR -48[rbp]
-	add	rax, 8
-	mov	rdx, QWORD PTR [rax]
+.L81:
+	cmp	DWORD PTR -4[rbp], 12
+	ja	.L49
 	mov	eax, DWORD PTR -4[rbp]
+	lea	rdx, 0[0+rax*4]
+	lea	rax, .L51[rip]
+	mov	eax, DWORD PTR [rdx+rax]
 	cdqe
+	lea	rdx, .L51[rip]
+	add	rax, rdx
+	jmp	rax
+	.section	.rodata
+	.align 4
+	.align 4
+.L51:
+	.long	.L49-.L51
+	.long	.L62-.L51
+	.long	.L61-.L51
+	.long	.L60-.L51
+	.long	.L59-.L51
+	.long	.L58-.L51
+	.long	.L57-.L51
+	.long	.L56-.L51
+	.long	.L55-.L51
+	.long	.L54-.L51
+	.long	.L53-.L51
+	.long	.L52-.L51
+	.long	.L50-.L51
+	.text
+.L62:
+	cmp	DWORD PTR -52[rbp], 1
+	jne	.L63
+	mov	DWORD PTR -4[rbp], 12
+	jmp	.L49
+.L63:
+	mov	DWORD PTR -4[rbp], 4
+	jmp	.L49
+.L61:
+	mov	DWORD PTR -24[rbp], 0
+	jmp	.L65
+.L66:
+	mov	eax, DWORD PTR -24[rbp]
+	movsx	rdx, eax
+	mov	rax, QWORD PTR -16[rbp]
 	add	rax, rdx
 	movzx	eax, BYTE PTR [rax]
 	movsx	ecx, al
-	mov	eax, DWORD PTR -4[rbp]
+	mov	eax, DWORD PTR -24[rbp]
 	cdqe
 	lea	rdx, 0[0+rax*4]
 	lea	rax, location[rip]
@@ -571,16 +547,155 @@ main:
 	xor	eax, ecx
 	mov	edi, eax
 	call	putchar@PLT
-	add	DWORD PTR -4[rbp], 1
-.L50:
-	cmp	DWORD PTR -4[rbp], 29
-	jle	.L51
-	lea	rax, .LC6[rip]
+	add	DWORD PTR -24[rbp], 1
+.L65:
+	cmp	DWORD PTR -24[rbp], 29
+	jle	.L66
+	lea	rax, .LC1[rip]
 	mov	rdi, rax
 	call	puts@PLT
-.L49:
+	mov	DWORD PTR -4[rbp], 8
+	jmp	.L49
+.L60:
+	lea	rax, .LC2[rip]
+	mov	rdi, rax
+	call	transform
+	cmp	eax, 999
+	jg	.L67
+	lea	rax, .LC3[rip]
+	mov	rdi, rax
 	mov	eax, 0
-.L47:
+	call	printf@PLT
+	jmp	.L68
+.L67:
+	lea	rax, .LC4[rip]
+	mov	rdi, rax
+	call	puts@PLT
+.L68:
+	mov	DWORD PTR -4[rbp], 0
+	jmp	.L49
+.L59:
+	mov	rax, QWORD PTR -16[rbp]
+	mov	rdi, rax
+	call	checkPrefix
+	mov	DWORD PTR -36[rbp], eax
+	cmp	DWORD PTR -36[rbp], 0
+	jne	.L69
+	mov	DWORD PTR -4[rbp], 5
+	jmp	.L49
+.L69:
+	mov	DWORD PTR -4[rbp], 11
+	jmp	.L49
+.L58:
+	lea	rax, redacted[rip]
+	mov	rdi, rax
+	call	puts@PLT
+	mov	DWORD PTR -4[rbp], 0
+	jmp	.L49
+.L57:
+	mov	rax, QWORD PTR -16[rbp]
+	mov	rdi, rax
+	call	checkQiu
+	test	eax, eax
+	je	.L71
+	mov	rax, QWORD PTR -16[rbp]
+	add	rax, 29
+	movzx	eax, BYTE PTR [rax]
+	cmp	al, 125
+	jne	.L71
+	mov	DWORD PTR -4[rbp], 2
+	jmp	.L72
+.L71:
+	mov	DWORD PTR -4[rbp], 8
+.L72:
+	jmp	.L49
+.L56:
+	mov	rax, QWORD PTR -16[rbp]
+	mov	rdi, rax
+	call	checkSparko
+	test	eax, eax
+	je	.L73
+	mov	rax, QWORD PTR -16[rbp]
+	add	rax, 12
+	movzx	eax, BYTE PTR [rax]
+	cmp	al, 95
+	jne	.L73
+	mov	DWORD PTR -4[rbp], 9
+	jmp	.L74
+.L73:
+	mov	DWORD PTR -4[rbp], 8
+.L74:
+	jmp	.L49
+.L55:
+	mov	DWORD PTR -4[rbp], 0
+	jmp	.L49
+.L54:
+	mov	rax, QWORD PTR -16[rbp]
+	mov	rdi, rax
+	call	checkLink
+	test	eax, eax
+	je	.L75
+	mov	rax, QWORD PTR -16[rbp]
+	add	rax, 17
+	movzx	eax, BYTE PTR [rax]
+	cmp	al, 95
+	jne	.L75
+	mov	DWORD PTR -4[rbp], 10
+	jmp	.L76
+.L75:
+	mov	DWORD PTR -4[rbp], 8
+.L76:
+	jmp	.L49
+.L53:
+	mov	rax, QWORD PTR -16[rbp]
+	mov	rdi, rax
+	call	checkOshotse
+	test	eax, eax
+	je	.L77
+	mov	rax, QWORD PTR -16[rbp]
+	add	rax, 25
+	movzx	eax, BYTE PTR [rax]
+	cmp	al, 95
+	jne	.L77
+	mov	DWORD PTR -4[rbp], 6
+	jmp	.L78
+.L77:
+	mov	DWORD PTR -4[rbp], 8
+.L78:
+	jmp	.L49
+.L52:
+	mov	rax, QWORD PTR -16[rbp]
+	add	rax, 5
+	movzx	eax, BYTE PTR [rax]
+	cmp	al, 123
+	jne	.L79
+	mov	DWORD PTR -4[rbp], 7
+	jmp	.L49
+.L79:
+	mov	DWORD PTR -4[rbp], 8
+	jmp	.L49
+.L50:
+	lea	rax, .LC5[rip]
+	mov	rdi, rax
+	call	transform
+	mov	esi, eax
+	lea	rax, .LC6[rip]
+	mov	rdi, rax
+	mov	eax, 0
+	call	printf@PLT
+	mov	eax, 0
+	call	garbage
+	mov	esi, eax
+	lea	rax, .LC7[rip]
+	mov	rdi, rax
+	mov	eax, 0
+	call	printf@PLT
+	mov	DWORD PTR -4[rbp], 3
+	nop
+.L49:
+	cmp	DWORD PTR -4[rbp], 0
+	jne	.L81
+	mov	eax, 0
 	leave
 	ret
 	.size	main, .-main
