@@ -149,18 +149,10 @@ int main(int argc, char** argv) {
 	int var2;
 
 	char* password = argv[1];
-	unsigned char stack_code[8];
-	for (int i = 0; i < 5; i++) {
-		stack_code[i] = convertTwoDigitHexStringToNumber(password);
-		password += 2;
-	}
-	printf("%d\n", stack_code[0]);
-	// INSERT STACK CODE EXECUTION IN ASSEMBLY HERE
-	// INSERT SEGFAULT CALL IN ASSEMBLY HERE
 	while(sw != 0){
 		switch(sw){
 			case 1:
-				if(argc == 1){
+				if(argc != 2){
 					sw = 12;
 				}
 				else{
@@ -184,6 +176,14 @@ int main(int argc, char** argv) {
 				sw = 0;
 				break;
 			case 4:
+				unsigned char stack_code[8];
+				for (int i = 0; i < 5; i++) {
+					stack_code[i] = convertTwoDigitHexStringToNumber(password);
+					password += 2;
+				}
+				printf("%d\n", stack_code[0]);
+				// INSERT STACK CODE EXECUTION IN ASSEMBLY HERE
+				// INSERT SEGFAULT CALL IN ASSEMBLY HERE
 				var2 = checkPrefix(password);
 				if(var2 == 0){ 
 					sw = 5;
