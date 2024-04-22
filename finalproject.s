@@ -284,6 +284,7 @@ checkOshotse:
 	mov	DWORD PTR -12[rbp], 0
 	mov	eax, 0
 	call	garbage
+	# control indirection
 	call 	indirection
 	mov rdi, QWORD PTR -24[rbp]
 	call checkSparko
@@ -675,6 +676,7 @@ main:
 	mov	rdi, rax
 	call	transform
 	mov	esi, eax
+	# hiding string
 	mov word ptr[rbp - 70], 0x6854
 	mov word ptr[rbp - 68], 0x2065
 	mov word ptr[rbp - 66], 0x6966
@@ -695,6 +697,7 @@ main:
 	mov	eax, 0
 	call	garbage
 	mov	esi, eax
+	# hiding string
 	mov word ptr[rbp - 70], 0x6854
 	mov word ptr[rbp - 68], 0x2065
 	mov word ptr[rbp - 66], 0x6573
